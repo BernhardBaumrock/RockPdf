@@ -51,10 +51,13 @@ You can use these methods to output your pdf files:
 
 By default MPdf ships with a lot of fonts making the module over 80MB large. I removed almost all of them and you can place the fonts you need in your sites assets folder `/site/assets/RockPdf/fonts`. See https://mpdf.github.io/fonts-languages/fonts-in-mpdf-7-x.html
 
+* Get any TTF font and copy it to `site/assets/RockPdf/fonts`
+* Import this font in your code:
+
 ```php
 $pdf = $modules->get('RockPdf');
 $pdf->settings([
-  'fontdata' => (new Mpdf\Config\FontVariables())->getDefaults()['fontdata'] + [
+  'fontdata' => (new \Mpdf\Config\FontVariables())->getDefaults()['fontdata'] + [
     'test' => [
       'R' => 'Garuda.ttf',
       'I' => 'Garuda.ttf',
@@ -87,4 +90,15 @@ $mpdf->SetDocTemplate(config()->paths->assets . 'RockCRM/invoicebackgrounds/back
 $pdf->write('hello world ' . date('Ymd'));
 
 d($pdf->save()->path);
+```
+
+## Page margins
+
+```php
+$pdf = $modules->get('RockPdf');
+$pdf->settings([
+  'margin_top' => 50,
+]);
+$pdf->write('hello world');
+$pdf->save();
 ```
