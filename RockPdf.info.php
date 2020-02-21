@@ -4,7 +4,7 @@
  */
 $info = [
   'title' => 'RockPdf',
-  'version' => '1.0.1',
+  'version' => '1.0.2',
   'summary' => 'mPDF helper module for ProcessWire CMS.',
   'singular' => false,
   'autoload' => false,
