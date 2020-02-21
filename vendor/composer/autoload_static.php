@@ -11,6 +11,10 @@ class ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38
     );
 
     public static $prefixLengthsPsr4 = array (
+        's' => 
+        array (
+            'setasign\\Fpdi\\' => 14,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -26,6 +30,10 @@ class ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38
     );
 
     public static $prefixDirsPsr4 = array (
+        'setasign\\Fpdi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -40,22 +48,11 @@ class ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38
         ),
     );
 
-    public static $classMap = array (
-        'FPDF_TPL' => __DIR__ . '/..' . '/setasign/fpdi/fpdf_tpl.php',
-        'FPDI' => __DIR__ . '/..' . '/setasign/fpdi/fpdi.php',
-        'FilterASCII85' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterASCII85.php',
-        'FilterASCIIHexDecode' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterASCIIHexDecode.php',
-        'FilterLZW' => __DIR__ . '/..' . '/setasign/fpdi/filters/FilterLZW.php',
-        'fpdi_pdf_parser' => __DIR__ . '/..' . '/setasign/fpdi/fpdi_pdf_parser.php',
-        'pdf_context' => __DIR__ . '/..' . '/setasign/fpdi/pdf_context.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38::$classMap;
 
         }, null, ClassLoader::class);
     }
