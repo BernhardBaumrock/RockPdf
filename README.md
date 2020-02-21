@@ -72,24 +72,18 @@ $pdf->save();
 
 ## Setting a Background (using mpdf features)
 
-
-![result](https://i.imgur.com/rrZC01M.png)
-
-![result](https://i.imgur.com/WQj8PTG.png)
-
-Here the code to copy&paste
+Example implementation in a custom module:
 
 ```php
-$pdf = modules('RockPdf');
-$mpdf = $pdf->mpdf;
-
-// needs to be set before any output!
-$mpdf->SetImportUse();
-$mpdf->SetDocTemplate(config()->paths->assets . 'RockCRM/invoicebackgrounds/background.pdf');
-
-$pdf->write('hello world ' . date('Ymd'));
-
-d($pdf->save()->path);
+/**
+ * Add Background PDF
+ */
+public function addBackground($pdf) {
+  $page = $this->pages->get("template=settings");
+  $pdfs = $page->getUnformatted('calendarbackground'); // files field
+  if(!$pdfs OR !$pdfs->count()) return; // no field or no file
+  $pdf->mpdf->SetDocTemplate($pdfs->first()->filename);
+}
 ```
 
 ## Page margins
@@ -102,3 +96,14 @@ $pdf->settings([
 $pdf->write('hello world');
 $pdf->save();
 ```
+
+Or via CSS:
+
+```php
+$pdf = $modules->get('RockPdf');
+$pdf->write("<style>@page { margin: 0}</style>");
+$pdf->write('hello world');
+$pdf->save();
+```
+
+![img](https://i.imgur.com/nrh263C.png)
