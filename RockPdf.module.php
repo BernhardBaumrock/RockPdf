@@ -137,4 +137,14 @@ class RockPdf extends WireData implements Module {
     return $this->config->paths->assets . 'RockPdf/' . $filename;
   }
 
+  /**
+   * Return debug info array
+   * @return array
+   */
+  public function __debugInfo() {
+    return [
+      'mpdf' => $this->mpdf,
+      'html' => $this->html,
+    ];
+  }
 }
