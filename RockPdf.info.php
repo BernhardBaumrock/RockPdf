@@ -3,9 +3,9 @@
  * Module info file that tells ProcessWire about this module. 
  */
 $info = [
-  'title' => 'mPDF Helper Module',
+  'title' => 'RockPdf',
   'version' => '1.0.1',
-  'summary' => 'A helper module for the mPDF library',
+  'summary' => 'mPDF helper module for ProcessWire CMS.',
   'singular' => false,
   'autoload' => false,
   'icon' => 'file-pdf-o',
