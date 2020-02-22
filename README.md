@@ -134,6 +134,31 @@ $pdf->save(); // save file to file system
 Using this technique you can easily style your icons using CSS or even LESS
 (when using RockLESS).
 
+### Another example
+
+Unfortunately duotone icons do not work (if you know how to make them work
+please drop me a line!). Also styling the icons is sometimes a bit tricky - 
+some CSS selectors work while others don't. Using classes directly on the icon
+worked best for me:
+
+```php
+$icons = $pdf->icon('fas fa-guitar red-2x')
+  .$pdf->icon('far fa-guitar red-2x')
+  .$pdf->icon('fal fa-guitar red-2x')
+  .$pdf->icon('fad fa-guitar red-2x');
+```
+
+```css
+.fab { font-family: fab; }
+.fad { font-family: fad; }
+.fal { font-family: fal; }
+.far { font-family: far; }
+.fas { font-family: fas; }
+.red-2x { font-size: 10mm; color: red; }
+```
+
+![img](https://i.imgur.com/ZPe7Dvq.png)
+
 ## Setting a Background (using mpdf features)
 
 Example implementation in a custom module:
