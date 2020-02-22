@@ -157,7 +157,7 @@ $icons = $pdf->icon('fas fa-guitar red-2x')
 .red-2x { font-size: 10mm; color: red; }
 ```
 
-![img](https://i.imgur.com/ZPe7Dvq.png)
+![img](https://i.imgur.com/2fzYFjo.png)
 
 ## Setting a Background (using mpdf features)
 
