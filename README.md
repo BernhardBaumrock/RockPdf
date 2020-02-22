@@ -92,6 +92,8 @@ $pdf->write($icon.'Hello World ' . date('H:i:s'));
 d($pdf->save());
 ```
 
+![img](https://i.imgur.com/Uyd8Ji5.png)
+
 You'll notice that we used the unicode representation of the icon. You can find
 all the codes on the cheatsheet (https://fontawesome.com/cheatsheet) or on the
 details page of the icon: https://fontawesome.com/icons/smile?style=regular
