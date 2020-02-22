@@ -128,7 +128,8 @@ $pdf->save(); // save file to file system
 ![img](https://i.imgur.com/U1OQrAz.png)
 
 Using this technique you can easily style your icons using CSS or even LESS
-(when using RockLESS).
+(when using RockLESS). Special thx to 
+[jamesfairhurst](https://github.com/mpdf/mpdf/issues/49#issuecomment-259455136)
 
 ## Setting a Background (using mpdf features)
 
