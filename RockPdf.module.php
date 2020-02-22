@@ -12,6 +12,9 @@ class RockPdf extends WireData implements Module {
   private $mpdfinstance;
   private $html;
 
+  // icon metadata
+  private $icons;
+
   /**
    * Initialize the module (optional)
    */
@@ -135,6 +138,47 @@ class RockPdf extends WireData implements Module {
   public function getAbsolute($filename) {
     if($this->isAbsolute($filename)) return $filename;
     return $this->config->paths->assets . 'RockPdf/' . $filename;
+  }
+
+  /**
+   * Get fontawesome icon based on class
+   * @return string
+   */
+  public function icon($class) {
+    // get metadata
+    $data = $this->getIconData();
+
+    // get portion of class that defines the icon
+    $icon = null;
+    foreach(explode(" ", $class) as $c) {
+      if($icon) continue; // skip if already found
+      if(strpos($c, "fa-") === 0) $icon = $c;
+    }
+    if(!$icon) throw new WireException("No icon class defined (fa-...)");
+    $icon = substr($icon, 3);
+
+    // get unicode
+    $code = $data->$icon->unicode;
+    return "<i class='$class'>&#x$code;</i>";
+  }
+
+  /**
+   * Get icon metadata
+   * @return 
+   */
+  public function getIconData() {
+    if($this->icons) return $this->icons;
+
+    // get data from json
+    $path = $this->config->paths->assets . "RockPdf/";
+    $file = $path."icons.json";
+    if(!is_file($file)) throw new WireException("icons.json not found in $path");
+    
+    $json = json_decode(file_get_contents($file));
+    if(!$json) throw new WireException("Unable to read icons.json file in $path");
+    
+    $this->icons = $json;
+    return $json;
   }
 
   /**

@@ -55,6 +55,7 @@ By default MPdf ships with a lot of fonts making the module over 80MB large. I r
 * Import this font in your code:
 
 ```php
+// tracy console
 $pdf = $modules->get('RockPdf');
 $pdf->settings([
   'fontdata' => (new \Mpdf\Config\FontVariables())->getDefaults()['fontdata'] + [
@@ -64,11 +65,70 @@ $pdf->settings([
     ]
   ],
 ]);
-$mpdf = $pdf->mpdf;
-$mpdf->WriteHTML('Hello World ' . date('H:i:s'));
-$mpdf->WriteHTML('<p style="font-family: test;">Hello World ' . date('H:i:s') . '</p>');
-$pdf->save();
+$pdf->write('Hello World ' . date('H:i:s'));
+$pdf->write('<p style="font-family: test;">Hello World ' . date('H:i:s') . '</p>');
+d($pdf->save());
 ```
+
+## Using FontAwesome 5 with mPDF
+
+* Download a copy of fontawesome (https://fontawesome.com/download, eg Free for Web)
+* Copy the TTF file into your `/site/assets/RockPdf/fonts/` folder
+* Add your font to your settings and start using icons in your PDFs
+
+```php
+// tracy console
+$pdf = $modules->get('RockPdf');
+$pdf->settings([
+  'fontdata' => (new \Mpdf\Config\FontVariables())->getDefaults()['fontdata'] + [
+    "far" => [
+      'R' => "fa-regular-400.ttf",
+      'I' => "fa-regular-400.ttf",
+    ],
+  ],
+]);
+$icon = "<i style='font-family: far;'>&#xf118;</i> ";
+$pdf->write($icon.'Hello World ' . date('H:i:s'));
+d($pdf->save());
+```
+
+You'll notice that we used the unicode representation of the icon. You can find
+all the codes on the cheatsheet (https://fontawesome.com/cheatsheet) or on the
+details page of the icon: https://fontawesome.com/icons/smile?style=regular
+
+Be careful to use the correct style (regular, solid, etc) and unicode!
+
+### Using metadata to get the unicode
+
+Too complicated? RockPdf comes with a helper so that you do not need to take
+care of all this and just use the regular fontawesome classes that you might
+already be familiar with! To make that work, just copy the icons.json file that
+is shipped with fontawesome in the `metadata` folder into the RockPdf assets
+folder `/site/assets/RockPdf/fonts`.
+
+```php
+// tracy console
+$pdf = $modules->get('RockPdf');
+$pdf->settings([
+  'fontdata' => (new \Mpdf\Config\FontVariables())->getDefaults()['fontdata'] + [
+    "far" => [
+      'R' => "fa-regular-400.ttf",
+      'I' => "fa-regular-400.ttf",
+    ],
+  ],
+]);
+$pdf->write("<style>.far { font-family: far; color: blue; }</style>");
+$icon = $pdf->icon('far fa-smile');
+$pdf->write($icon.'Hello World ' . date('H:i:s'));
+d($pdf->html()); // print content to console
+$pdf->save(); // save file to file system
+```
+
+![img](https://i.imgur.com/UxeTjqe.png)
+![img](https://i.imgur.com/U1OQrAz.png)
+
+Using this technique you can easily style your icons using CSS or even LESS
+(when using RockLESS).
 
 ## Setting a Background (using mpdf features)
 
