@@ -190,9 +190,89 @@ Or via CSS:
 
 ```php
 $pdf = $modules->get('RockPdf');
-$pdf->write("<style>@page { margin: 0}</style>");
+$pdf->write("<style>@page { margin: 0 }</style>");
 $pdf->write('hello world');
 $pdf->save();
 ```
 
 ![img](https://i.imgur.com/nrh263C.png)
+
+## Page margins for print with cropmarks
+
+```php
+// thx to https://stackoverflow.com/a/50245034/6370411
+$pdf = $modules->get('RockPdf');
+$pdf->settings([
+  'mode' => 'utf-8',
+  'format' => [214, 301],
+  'img_dpi' => 300,
+]);
+$pdf->write('
+<style>
+  @page {
+    /* regular A4 paper size is 210x297 */
+    size: 211mm 298mm; /* trying some weird format to make sure it works */
+    marks: crop;
+  }
+</style>
+Content
+');
+d($pdf->save());
+```
+
+![img](https://i.imgur.com/lMwNYt1.png)
+![img](https://i.imgur.com/Ad8oMCE.png)
+
+## Real life example using RockPdf and RockLESS
+
+```php
+// parts of RockPdfCalendar module
+
+  public function init() {
+    $this->w = $w = 420; // paper width in mm
+    $this->h = $h = 297; // paper height in mm
+    $this->b = $b = 2; // bleed in mm
+
+    /** @var RockPdf $pdf */
+    $pdf = $this->modules->get('RockPdf');
+    $pdf->settings([
+      'mode' => 'utf-8',
+      'format' => [($w+2*$b), ($h+2*$b)],
+      'dpi' => 300,
+      'img_dpi' => 300,
+    ]);
+    $this->addBackground($pdf);
+    $this->addStyles($pdf);
+
+    $this->pdf = $pdf;
+  }
+
+  /**
+   * Add Background PDF
+   * @return void
+   */
+  public function addBackground($pdf) {
+    $page = $this->pages->get("template=settings");
+    $pdfs = $page->getUnformatted('calendarbackground');
+    if(!$pdfs OR !$pdfs->count()) return; // no field or no file
+    $pdf->set('SetDocTemplate', $pdfs->first()->filename);
+  }
+
+  /**
+   * Add styles
+   */
+  public function addStyles($pdf) {
+    /** @var RockLESS $less */
+    $less = $this->modules->get('RockLESS');
+    $less->vars = [
+      'w' => $this->w."mm",
+      'h' => $this->h."mm",
+      'b' => $this->b."mm",
+    ];
+    $css = $less->getCSS(__DIR__ . "/style.less")->css;
+    $pdf->write("<style>\n$css</style>");
+  }
+```
+
+Then all you have to do is call `$modules->get('RockPdfCalendar')->show()`
+to render the pdf in the browser :)
