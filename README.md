@@ -221,7 +221,11 @@ d($pdf->save());
 ```
 
 ![img](https://i.imgur.com/lMwNYt1.png)
+
 ![img](https://i.imgur.com/Ad8oMCE.png)
+
+You see that the `Trim Box` shows our custom values 211x298 whereas the bounding
+box would show the paper size (214x301).
 
 ## Real life example using RockPdf and RockLESS
 
