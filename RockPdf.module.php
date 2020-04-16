@@ -8,8 +8,9 @@
 
 class RockPdf extends WireData implements Module {
 
-  public $mpdf; // holds the mpdf instance
-  private $mpdfinstance;
+  /** @var \Mpdf\Mpdf */
+  public $mpdf;
+  
   private $html;
 
   // icon metadata
