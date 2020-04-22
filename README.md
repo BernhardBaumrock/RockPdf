@@ -245,6 +245,7 @@ $pdf->write("<div class='world'>world</div>");
 d($pdf->save());
 ```
 ![img](https://i.imgur.com/6V8JMhi.png)
+
 ![img](https://i.imgur.com/7bc95Ff.png)
 
 This is the result of `$pdf->html()`
