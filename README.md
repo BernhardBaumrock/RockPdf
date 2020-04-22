@@ -227,6 +227,48 @@ d($pdf->save());
 You see that the `Trim Box` shows our custom values 211x298 whereas the bounding
 box would show the paper size (214x301).
 
+## Combine RockPdf and RockLESS
+
+```php
+$pdf = $modules->get('RockPdf');
+$less = $modules->get('RockLESS');
+$style = "
+@padding-s: 10pt;
+.border { border: 1pt solid #afafaf; }
+.hello { .border; color: blue; padding-top: @padding-s; }
+.world { .border; color: red; padding-top: @padding-s * 2; }
+";
+$css = "\n".$less->parse($style);
+$pdf->write("<style>$css</style>");
+$pdf->write("<div class='hello'>hello</div>");
+$pdf->write("<div class='world'>world</div>");
+d($pdf->save());
+```
+![img](https://i.imgur.com/6V8JMhi.png)
+![img](https://i.imgur.com/7bc95Ff.png)
+
+This is the result of `$pdf->html()`
+
+```html
+<style>
+.border {
+  border: 1pt solid #afafaf;
+}
+.hello {
+  border: 1pt solid #afafaf;
+  color: blue;
+  padding-top: 10pt;
+}
+.world {
+  border: 1pt solid #afafaf;
+  color: red;
+  padding-top: 20pt;
+}
+</style>
+<div class='hello'>hello</div>
+<div class='world'>world</div>
+```
+
 ## Real life example using RockPdf and RockLESS
 
 ```php
