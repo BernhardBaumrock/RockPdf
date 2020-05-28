@@ -10,7 +10,7 @@ class RockPdf extends WireData implements Module {
 
   /** @var \Mpdf\Mpdf */
   public $mpdf;
-  
+
   private $html;
 
   // icon metadata
@@ -94,7 +94,7 @@ class RockPdf extends WireData implements Module {
     if($this->isAbsolute($filename)) throw new WireException('filename must not be a path');
     $this->mpdf->Output($filename, \Mpdf\Output\Destination::INLINE);
   }
-  
+
   /**
    * download file
    * @param string filename, filename of the pdf
@@ -109,6 +109,15 @@ class RockPdf extends WireData implements Module {
    */
   public function html() {
     return $this->html;
+  }
+
+  /**
+   * Dump this pdf as iframe to tracy
+   * @return void
+   */
+  public function dump() {
+    $src = $this->save()->url;
+    echo "<iframe src='$src' style='width: 100%; height: 300px;'></iframe>";
   }
 
   /* ########## helper functions ########## */
@@ -165,7 +174,7 @@ class RockPdf extends WireData implements Module {
 
   /**
    * Get icon metadata
-   * @return 
+   * @return
    */
   public function getIconData() {
     if($this->icons) return $this->icons;
@@ -174,10 +183,10 @@ class RockPdf extends WireData implements Module {
     $path = $this->config->paths->assets . "RockPdf/";
     $file = $path."icons.json";
     if(!is_file($file)) throw new WireException("icons.json not found in $path");
-    
+
     $json = json_decode(file_get_contents($file));
     if(!$json) throw new WireException("Unable to read icons.json file in $path");
-    
+
     $this->icons = $json;
     return $json;
   }
