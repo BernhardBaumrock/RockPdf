@@ -32,6 +32,7 @@ $pdf->write('Hello World ' . date('H:i:s'));
 $pdf->write('<!-- my custom comment -->');
 d($pdf->html()); // output html in tracy console
 d($pdf->save()); // generate pdf
+$pdf->dump(); // dump pdf to iframe in tracy console
 ```
 
 Output:
