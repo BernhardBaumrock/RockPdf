@@ -136,6 +136,15 @@ class RockPdf extends WireData implements Module {
   }
 
   /**
+   * Wrap string in a table for PDF formatting
+   * mPdf does not support block level elements in table cells
+   * The workaround is to do everything table-based like in the 90s :)
+   */
+  public function td($str, $tdClass = null, $tableClass = null) {
+    return "<table class='$tableClass'><tr><td class='$tdClass'>$str</td></tr></table>";
+  }
+
+  /**
    * return absolute filepath
    */
   public function getAbsolute($filename) {
