@@ -16,6 +16,17 @@ class RockPdf extends WireData implements Module {
   // icon metadata
   private $icons;
 
+  public static function getModuleInfo() {
+    return [
+      'title' => 'RockPdf',
+      'version' => '2.0.5',
+      'summary' => 'mPDF helper module for ProcessWire CMS.',
+      'singular' => false,
+      'autoload' => false,
+      'icon' => 'file-pdf-o',
+    ];
+  }
+
   /**
    * Initialize the module (optional)
    */
@@ -133,6 +144,15 @@ class RockPdf extends WireData implements Module {
       else $this->html .= "<!-- \$mpdf->{$data[0]}('" . print_r($data[1], true) . "') -->";
     }
     else $this->html .= $data;
+  }
+
+  /**
+   * Wrap string in a table for PDF formatting
+   * mPdf does not support block level elements in table cells
+   * The workaround is to do everything table-based like in the 90s :)
+   */
+  public function div($str, $class = null) {
+    return "<div class='$class'>$str</div>\n";
   }
 
   /**
