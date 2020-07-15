@@ -136,18 +136,30 @@ class RockPdf extends WireData implements Module {
   }
 
   /**
-   * check if the filename is an absolute path
-   */
-  public function isAbsolute($filename) {
-    return (strpos($filename, '/') === 0 || strpos($filename, ':/') !== false);
-  }
-
-  /**
    * return absolute filepath
    */
   public function getAbsolute($filename) {
     if($this->isAbsolute($filename)) return $filename;
     return $this->config->paths->assets . 'RockPdf/' . $filename;
+  }
+
+  /**
+   * Get icon metadata
+   * @return
+   */
+  public function getIconData() {
+    if($this->icons) return $this->icons;
+
+    // get data from json
+    $path = $this->config->paths->assets . "RockPdf/";
+    $file = $path."icons.json";
+    if(!is_file($file)) throw new WireException("icons.json not found in $path");
+
+    $json = json_decode(file_get_contents($file));
+    if(!$json) throw new WireException("Unable to read icons.json file in $path");
+
+    $this->icons = $json;
+    return $json;
   }
 
   /**
@@ -173,22 +185,10 @@ class RockPdf extends WireData implements Module {
   }
 
   /**
-   * Get icon metadata
-   * @return
+   * check if the filename is an absolute path
    */
-  public function getIconData() {
-    if($this->icons) return $this->icons;
-
-    // get data from json
-    $path = $this->config->paths->assets . "RockPdf/";
-    $file = $path."icons.json";
-    if(!is_file($file)) throw new WireException("icons.json not found in $path");
-
-    $json = json_decode(file_get_contents($file));
-    if(!$json) throw new WireException("Unable to read icons.json file in $path");
-
-    $this->icons = $json;
-    return $json;
+  public function isAbsolute($filename) {
+    return (strpos($filename, '/') === 0 || strpos($filename, ':/') !== false);
   }
 
   /**
