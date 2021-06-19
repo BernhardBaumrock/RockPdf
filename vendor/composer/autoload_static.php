@@ -21,6 +21,7 @@ class ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38
         ),
         'M' => 
         array (
+            'Mpdf\\QrCode\\' => 12,
             'Mpdf\\' => 5,
         ),
         'D' => 
@@ -38,6 +39,10 @@ class ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Mpdf\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mpdf/qrcode/src',
+        ),
         'Mpdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
@@ -48,11 +53,16 @@ class ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite1e5a7152d1289d2941823f1ab89eb38::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -324,3 +324,26 @@ This is the result of `$pdf->html()`
 
 Then all you have to do is call `$modules->get('RockPdfCalendar')->show()`
 to render the pdf in the browser :)
+
+## Generating QR-Codes
+
+Simple example that generates the current page URL as a QR code and adds it to a RockPDF:
+
+```php
+/**
+ * Generate QR-Code
+ * @see: https://mpdf.github.io/what-else-can-i-do/barcodes.html
+ */
+$qr_code = '<barcode
+              code="'.$page->httpUrl().'"
+              size="1"
+              type="QR"
+              error="M"
+              disableborder="0"
+              color="#000000"/>';
+
+// create pdf
+$pdf = $modules->get('RockPdf');
+$pdf->write($qr_code);
+$pdf->show();
+```
