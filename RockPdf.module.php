@@ -19,7 +19,7 @@ class RockPdf extends WireData implements Module {
   public static function getModuleInfo() {
     return [
       'title' => 'RockPdf',
-      'version' => '2.0.5',
+      'version' => '2.0.6',
       'summary' => 'mPDF helper module for ProcessWire CMS.',
       'singular' => false,
       'autoload' => false,
