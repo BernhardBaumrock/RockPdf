@@ -24,6 +24,9 @@ class RockPdf extends WireData implements Module {
       'singular' => false,
       'autoload' => false,
       'icon' => 'file-pdf-o',
+      'requires' => [
+        'PHP>=8.0',
+      ],
     ];
   }
 
